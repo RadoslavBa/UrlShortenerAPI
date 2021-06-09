@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:./data/demo;
+    driverClassName: org.h2.Driver
+    username: barados
+    password: barados
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
