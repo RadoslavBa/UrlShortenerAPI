@@ -31,7 +31,7 @@ public class HelpServiceImpl implements HelpService {
 
     private String description() {
         return "URL Shortener Application is used to register shortened URL with created account. It uses SpringBoot framework and h2 database." +
-                " To build and run application use command 'mvn clean install' and run without any attributes." +
+                " To build and run application use command 'mvn clean install' and run without any attributes on embedded tomcat." +
                 "\n" +
                 "Endpoints /account and /help are available for all. The rest of endpoints /account/{id}, /register, /{shortUrl} " +
                 "are available only with set Authorization Header." +
