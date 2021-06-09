@@ -54,13 +54,13 @@ public class UrlServiceImplTest {
         doReturn(AccountEntity.builder().build()).when(accountService).loggedAccount();
         doReturn(savedUrlEntity()).when(urlRepository).saveAndFlush(ArgumentMatchers.any(UrlEntity.class));
 
-        val convertedUrl = urlService.convertToShortUrl(request);
+        val response = urlService.convertToShortUrl(request);
 
         verify(urlRepository).saveAndFlush(urlEntityCaptor.capture());
         val urlValue = urlEntityCaptor.getValue();
 
         assertThat(urlValue.name()).contains("www.example.com/test");
-        assertThat(convertedUrl).contains("http://example.com/");
+        assertThat(response.shortUrl()).contains("http://example.com/");
 
     }
 
@@ -72,8 +72,8 @@ public class UrlServiceImplTest {
         doReturn(AccountEntity.builder().urls(singleton(urlEntity)).build()).when(accountService).loggedAccount();
         doReturn(Optional.of(urlEntity)).when(urlRepository).findByNameIgnoreCase("www.example.com/test");
 
-        val convertedUrl = urlService.convertToShortUrl(request);
-        assertThat(convertedUrl).contains("http://example.com/");
+        val response = urlService.convertToShortUrl(request);
+        assertThat(response.shortUrl()).contains("http://example.com/");
     }
 
     private UrlEntity urlEntity() {

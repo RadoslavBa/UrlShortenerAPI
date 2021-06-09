@@ -2,6 +2,7 @@ package balucha.url.shortener.service.impl;
 
 import balucha.url.shortener.component.UuidUrlConverter;
 import balucha.url.shortener.domain.UrlRequest;
+import balucha.url.shortener.domain.UrlResponse;
 import balucha.url.shortener.exception.ValidationException;
 import balucha.url.shortener.persistence.entity.AccountEntity;
 import balucha.url.shortener.persistence.entity.UrlEntity;
@@ -35,7 +36,7 @@ public class UrlServiceImpl implements UrlService {
     private final AccountService accountService;
 
     @Override
-    public String convertToShortUrl(UrlRequest urlRequest) {
+    public UrlResponse convertToShortUrl(UrlRequest urlRequest) {
         AccountEntity loggedAccount = accountService.loggedAccount();
         // filter non-existing url for logged account
         Optional<UrlEntity> urlEntity = Optional.of(urlRequest)
@@ -47,7 +48,7 @@ public class UrlServiceImpl implements UrlService {
                 .map(UrlEntity::id)
                 .orElseGet(() -> existingUrlId(urlRequest));
         String uuid64 = uuidUrlConverter.uuidHextoUuid64(uuidHex);
-        return new StringBuilder(rootUrlName(urlRequest)).append(uuid64).toString();
+        return UrlResponse.builder().shortUrl(new StringBuilder(rootUrlName(urlRequest)).append(uuid64).toString()).build();
     }
 
     @Override

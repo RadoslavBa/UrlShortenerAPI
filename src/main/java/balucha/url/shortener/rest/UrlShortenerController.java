@@ -42,7 +42,7 @@ public class UrlShortenerController {
     }
 
     @PostMapping("register")
-    public String registerUrl(@Valid @RequestBody UrlRequest urlRequest) {
+    public UrlResponse registerUrl(@Valid @RequestBody UrlRequest urlRequest) {
         return urlService.convertToShortUrl(urlRequest);
     }
 
